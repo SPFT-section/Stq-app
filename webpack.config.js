@@ -6,9 +6,24 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const pkg = require('./package.json');
+
+// Derive a sensible default public path from package.json homepage when possible.
+const homepagePath = (() => {
+  if (!pkg || !pkg.homepage) return '/stq-app/';
+  try {
+    // If homepage is a full URL, extract the pathname (e.g. /owner/repo/)
+    const url = new URL(pkg.homepage, 'http://example.com');
+    // Ensure pathname ends with a slash for GitHub Pages project sites
+    return (url.pathname.endsWith('/') ? url.pathname : url.pathname + '/');
+  } catch (e) {
+    // If homepage is already a path (or invalid URL), use it directly.
+    return pkg.homepage.endsWith('/') ? pkg.homepage : pkg.homepage + '/';
+  }
+})();
 
 module.exports = (env, argv) => {
-  const isProduction = argv.mode === 'production';
+  const isProduction = argv && argv.mode === 'production';
 
   return {
     entry: './src/index.js',
@@ -19,7 +34,7 @@ module.exports = (env, argv) => {
       clean: true,
       // GitHub Pages project sites are served from /<repo-name>/, not the domain root.
       // Override with PUBLIC_PATH env var if deploying elsewhere (e.g. a custom domain or Netlify/Vercel root).
-      publicPath: isProduction ? (process.env.PUBLIC_PATH || '/stq-app/') : '/',
+      publicPath: isProduction ? (process.env.PUBLIC_PATH || homepagePath) : '/',
     },
     module: {
       rules: [
@@ -67,13 +82,14 @@ module.exports = (env, argv) => {
       // Expose the deployment sub-path to client code (used as BrowserRouter's basename)
       new webpack.DefinePlugin({
         'process.env.PUBLIC_PATH': JSON.stringify(
-          isProduction ? (process.env.PUBLIC_PATH || '/stq-app/') : '/'
+          isProduction ? (process.env.PUBLIC_PATH || homepagePath) : '/'
         ),
       }),
       new HtmlWebpackPlugin({
         template: './public/index.html',
         filename: 'index.html',
-        favicon: './public/favicon.svg',
+        // Resolve favicon path explicitly so HtmlWebpackPlugin can read it reliably.
+        favicon: path.resolve(__dirname, 'public', 'favicon.svg'),
         inject: true, // ✅ เพิ่มบรรทัดนี้
         minify: isProduction ? {
           removeComments: true,
