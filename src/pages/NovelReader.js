@@ -16,6 +16,7 @@ export const NovelReader = () => {
   const { addHistory } = useHistoryStore();
   
   const contentRef = useRef(null);
+  const progressRef = useRef(0);
   const [novel, setNovel] = useState(null);
   const [currentChapter, setCurrentChapter] = useState(null);
   const [chapters, setChapters] = useState([]);
@@ -73,14 +74,21 @@ export const NovelReader = () => {
     }
   }, [currentChapter]);
 
-  // Save progress when leaving
+  // Keep a ref of the latest progress so the effect below doesn't need
+  // to depend on `progress` (which changes on every scroll tick).
+  useEffect(() => {
+    progressRef.current = progress;
+  }, [progress]);
+
+  // Save progress when leaving the chapter/novel (or unmounting) —
+  // only re-fires when the chapter actually changes, not on every scroll.
   useEffect(() => {
     return () => {
       if (novel && currentChapter) {
-        addHistory(novel.id, currentChapter.id, progress, contentRef.current?.scrollTop || 0);
+        addHistory(novel.id, currentChapter.id, progressRef.current, contentRef.current?.scrollTop || 0);
       }
     };
-  }, [novel, currentChapter, progress, addHistory]);
+  }, [novel, currentChapter, addHistory]);
 
   const handlePrevChapter = () => {
     if (currentIndex > 0) {

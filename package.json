@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "STQ - Standard To Quality เว็บแอปเขียนและอ่านนิยายแบบ Local-First",
   "main": "src/index.js",
-  "homepage": "https://sunmindsssa.github.io/stq-app",
+  "homepage": "https://spft-section.github.io/Stq-app",
   "scripts": {
     "start": "webpack serve --mode development --open",
     "build": "webpack --mode production",
