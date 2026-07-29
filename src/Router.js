@@ -17,12 +17,17 @@ const PageLoader = () => (
   </div>
 );
 
-// Strip trailing slash so basename matches React Router's expected format (e.g. "/Stq.github.io" not "/Stq.github.io/")
-const basePath = (process.env.PUBLIC_PATH || '/').replace(/\/$/, '') || '/';
+// Determine basename for BrowserRouter.
+// Prefer PUBLIC_URL (CRA / homepage), then PUBLIC_PATH, then '/'.
+// Normalize by removing a trailing slash. If the result represents the root,
+// pass undefined to BrowserRouter so it behaves as expected for root deployments.
+const rawBase = process.env.PUBLIC_URL || process.env.PUBLIC_PATH || '/';
+const normalized = rawBase.replace(/\/$/, '');
+const basePath = (normalized === '' || normalized === '/') ? '' : normalized;
 
 export const Router = () => {
   return (
-    <BrowserRouter basename={basePath}>
+    <BrowserRouter basename={basePath || undefined}>
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Home />} />
