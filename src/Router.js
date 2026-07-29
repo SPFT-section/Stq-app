@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 // Lazy load pages
 const Home = lazy(() => import('./pages/Home'));
@@ -20,28 +20,29 @@ const PageLoader = () => (
 // Determine basename for BrowserRouter.
 // Prefer PUBLIC_URL (CRA / homepage), then PUBLIC_PATH, then '/'.
 // Normalize by removing a trailing slash. If the result represents the root,
-// pass undefined to BrowserRouter so it behaves as expected for root deployments.
+// treat it as '' so BrowserRouter behaves as expected for root deployments.
 const rawBase = process.env.PUBLIC_URL || process.env.PUBLIC_PATH || '/';
 const normalized = rawBase.replace(/\/$/, '');
-const basePath = (normalized === '' || normalized === '/') ? '' : normalized;
+export const basePath = (normalized === '' || normalized === '/') ? '' : normalized;
 
-export const Router = () => {
+// Route table only — BrowserRouter now lives in App.js so that layout
+// components (Header, Navigation, Footer) are also inside the Router
+// context and can safely use <Link>/useNavigate.
+export const AppRoutes = () => {
   return (
-    <BrowserRouter basename={basePath || undefined}>
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/library" element={<Library />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/editor/new" element={<NovelEditor />} />
-          <Route path="/editor/:id" element={<NovelEditor />} />
-          <Route path="/reader/:novelId" element={<NovelReader />} />
-          <Route path="/reader/:novelId/:chapterId" element={<NovelReader />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
+    <Suspense fallback={<PageLoader />}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/library" element={<Library />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/editor/new" element={<NovelEditor />} />
+        <Route path="/editor/:id" element={<NovelEditor />} />
+        <Route path="/reader/:novelId" element={<NovelReader />} />
+        <Route path="/reader/:novelId/:chapterId" element={<NovelReader />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Suspense>
   );
 };
 

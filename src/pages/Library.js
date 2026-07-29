@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/common/Button';
 import { Icon } from '../components/common/Icon';
 import { useNovel } from '../hooks/useNovel';
@@ -7,6 +8,7 @@ import { NOVEL_STATUS, NOVEL_STATUS_LABELS, GENRES } from '../config/constants';
 import './Pages.css';
 
 export const Library = () => {
+  const navigate = useNavigate();
   const { novels, deleteNovel, getAllNovels } = useNovel();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
@@ -63,7 +65,7 @@ export const Library = () => {
         <Button
           variant="primary"
           icon={<Icon name="plus" size={20} />}
-          onClick={() => window.location.href = '/editor/new'}
+          onClick={() => navigate('/editor/new')}
         >
           New Novel
         </Button>
@@ -206,7 +208,7 @@ export const Library = () => {
                     variant="primary"
                     size="sm"
                     icon={<Icon name="bookOpen" size={16} />}
-                    onClick={() => window.location.href = `/reader/${novel.id}`}
+                    onClick={() => navigate(`/reader/${novel.id}`)}
                   >
                     Read
                   </Button>
@@ -214,7 +216,7 @@ export const Library = () => {
                     variant="secondary"
                     size="sm"
                     icon={<Icon name="pencil" size={16} />}
-                    onClick={() => window.location.href = `/editor/${novel.id}`}
+                    onClick={() => navigate(`/editor/${novel.id}`)}
                   >
                     Edit
                   </Button>
@@ -254,7 +256,7 @@ export const Library = () => {
             <Button
               variant="primary"
               icon={<Icon name="plus" size={20} />}
-              onClick={() => window.location.href = '/editor/new'}
+              onClick={() => navigate('/editor/new')}
             >
               Create Your First Novel
             </Button>

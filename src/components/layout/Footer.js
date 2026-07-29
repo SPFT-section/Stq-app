@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Icon } from '../common/Icon';
 import './Footer.css';
 
@@ -11,7 +12,7 @@ export const Footer = () => {
         <div className="footer-brand">
           <div className="footer-logo">
             <img
-              src="/favicon.svg"
+              src="favicon.svg"
               alt="STQ Logo"
               width="24"
               height="24"
@@ -26,17 +27,17 @@ export const Footer = () => {
         <div className="footer-links">
           <div className="footer-links-group">
             <h4>Navigation</h4>
-            <a href="/">Home</a>
-            <a href="/library">Library</a>
-            <a href="/history">History</a>
-            <a href="/profile">Profile</a>
+            <Link to="/">Home</Link>
+            <Link to="/library">Library</Link>
+            <Link to="/history">History</Link>
+            <Link to="/profile">Profile</Link>
           </div>
 
           <div className="footer-links-group">
             <h4>Features</h4>
-            <a href="/editor/new">Write Novel</a>
-            <a href="/library">Browse Novels</a>
-            <a href="/profile">Reading Settings</a>
+            <Link to="/editor/new">Write Novel</Link>
+            <Link to="/library">Browse Novels</Link>
+            <Link to="/profile">Reading Settings</Link>
           </div>
 
           <div className="footer-links-group">

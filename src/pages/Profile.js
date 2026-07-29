@@ -1,6 +1,9 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/common/Button';
 import { Icon } from '../components/common/Icon';
+import { Modal } from '../components/common/Modal';
+import { ReadingSettings } from '../components/settings/ReadingSettings';
 import { useUserStore } from '../store/userStore';
 import { useNovel } from '../hooks/useNovel';
 import { useReadingSettings } from '../hooks/useReadingSettings';
@@ -10,13 +13,15 @@ import { format } from '../utils/formatter';
 import './Pages.css';
 
 export const Profile = () => {
+  const navigate = useNavigate();
   const { profile, updateProfile, getStats } = useUserStore();
   const { getAllNovels } = useNovel();
-  const { settings, resetSettings } = useReadingSettings();
+  const { settings, updateSetting, resetSettings } = useReadingSettings();
   const { clearHistory } = useHistoryStore();
   
   const [isEditing, setIsEditing] = useState(false);
   const [displayName, setDisplayName] = useState(profile.displayName);
+  const [isReadingSettingsOpen, setIsReadingSettingsOpen] = useState(false);
   const fileInputRef = useRef(null);
 
   const novels = getAllNovels();
@@ -82,7 +87,7 @@ export const Profile = () => {
       storage.clear();
       clearHistory();
       resetSettings();
-      window.location.href = '/';
+      navigate('/');
     }
   };
 
@@ -220,7 +225,7 @@ export const Profile = () => {
             <Button
               variant="secondary"
               size="sm"
-              onClick={() => window.location.href = '/reader/settings'}
+              onClick={() => setIsReadingSettingsOpen(true)}
             >
               Configure
             </Button>
@@ -307,6 +312,18 @@ export const Profile = () => {
           </Button>
         </div>
       </div>
+
+      <Modal
+        isOpen={isReadingSettingsOpen}
+        onClose={() => setIsReadingSettingsOpen(false)}
+        title="Reading Settings"
+      >
+        <ReadingSettings
+          settings={settings}
+          onUpdateSetting={updateSetting}
+          onReset={resetSettings}
+        />
+      </Modal>
     </div>
   );
 };

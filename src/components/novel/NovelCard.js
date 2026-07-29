@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../common/Button';
 import { Icon } from '../common/Icon';
 import { format } from '../../utils/formatter';
 
 export const NovelCard = ({ novel, onRead, onEdit, onDelete }) => {
+  const navigate = useNavigate();
   if (!novel) return null;
 
   return (
@@ -46,7 +48,7 @@ export const NovelCard = ({ novel, onRead, onEdit, onDelete }) => {
             variant="primary"
             size="sm"
             icon={<Icon name="bookOpen" size={16} />}
-            onClick={() => (onRead ? onRead(novel) : (window.location.href = `/reader/${novel.id}`))}
+            onClick={() => (onRead ? onRead(novel) : navigate(`/reader/${novel.id}`))}
           >
             Read
           </Button>
@@ -54,7 +56,7 @@ export const NovelCard = ({ novel, onRead, onEdit, onDelete }) => {
             variant="secondary"
             size="sm"
             icon={<Icon name="pencil" size={16} />}
-            onClick={() => (onEdit ? onEdit(novel) : (window.location.href = `/editor/${novel.id}`))}
+            onClick={() => (onEdit ? onEdit(novel) : navigate(`/editor/${novel.id}`))}
           >
             Edit
           </Button>

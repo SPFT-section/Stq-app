@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Icon } from '../common/Icon';
 import { Button } from '../common/Button';
 import { ThemeToggle } from '../settings/ThemeToggle';
@@ -6,6 +7,7 @@ import './Header.css';
 
 export const Header = ({ onMenuToggle, isMenuOpen }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <header className="header">
@@ -19,9 +21,9 @@ export const Header = ({ onMenuToggle, isMenuOpen }) => {
             <Icon name="menu" size={24} />
           </button>
 
-          <a href="/" className="header-logo">
+          <Link to="/" className="header-logo">
             <img
-              src="/favicon.svg"
+              src="favicon.svg"
               alt="STQ Logo"
               className="header-logo-icon"
               width="32"
@@ -29,26 +31,26 @@ export const Header = ({ onMenuToggle, isMenuOpen }) => {
             />
             <span className="header-logo-text">STQ</span>
             <span className="header-logo-sub">Standard To Quality</span>
-          </a>
+          </Link>
         </div>
 
         <nav className="header-nav" aria-label="Main navigation">
-          <a href="/" className="header-nav-link active">
+          <Link to="/" className="header-nav-link active">
             <Icon name="home" size={20} />
             <span>Home</span>
-          </a>
-          <a href="/library" className="header-nav-link">
+          </Link>
+          <Link to="/library" className="header-nav-link">
             <Icon name="library" size={20} />
             <span>Library</span>
-          </a>
-          <a href="/history" className="header-nav-link">
+          </Link>
+          <Link to="/history" className="header-nav-link">
             <Icon name="history" size={20} />
             <span>History</span>
-          </a>
-          <a href="/profile" className="header-nav-link">
+          </Link>
+          <Link to="/profile" className="header-nav-link">
             <Icon name="user" size={20} />
             <span>Profile</span>
-          </a>
+          </Link>
         </nav>
 
         <div className="header-right">
@@ -66,7 +68,7 @@ export const Header = ({ onMenuToggle, isMenuOpen }) => {
             variant="primary"
             size="sm"
             icon={<Icon name="plus" size={16} />}
-            onClick={() => window.location.href = '/editor/new'}
+            onClick={() => navigate('/editor/new')}
           >
             New Novel
           </Button>

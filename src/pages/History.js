@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/common/Button';
 import { Icon } from '../components/common/Icon';
 import { useHistoryStore } from '../store/historyStore';
@@ -7,6 +8,7 @@ import { format } from '../utils/formatter';
 import './Pages.css';
 
 export const History = () => {
+  const navigate = useNavigate();
   const { history, clearHistory, removeHistory } = useHistoryStore();
   const { getNovel, getChapter } = useNovel();
   const [filter, setFilter] = useState('all');
@@ -76,7 +78,7 @@ export const History = () => {
           <p>Start reading a novel to track your progress here.</p>
           <Button
             variant="primary"
-            onClick={() => window.location.href = '/library'}
+            onClick={() => navigate('/library')}
           >
             Browse Library
           </Button>
@@ -172,7 +174,7 @@ export const History = () => {
                       variant="primary"
                       size="sm"
                       icon={<Icon name="arrowRight" size={16} />}
-                      onClick={() => window.location.href = `/reader/${item.novelId}/${item.chapterId}`}
+                      onClick={() => navigate(`/reader/${item.novelId}/${item.chapterId}`)}
                     >
                       Continue
                     </Button>

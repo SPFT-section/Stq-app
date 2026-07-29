@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '../components/common/Button';
 import { Icon } from '../components/common/Icon';
 import { useNovel } from '../hooks/useNovel';
@@ -7,6 +8,7 @@ import { format } from '../utils/formatter';
 import './Pages.css';
 
 export const Home = () => {
+  const navigate = useNavigate();
   const { getAllNovels } = useNovel();
   const { getLatestHistory } = useHistoryStore();
   
@@ -47,7 +49,7 @@ export const Home = () => {
               variant="primary"
               size="lg"
               icon={<Icon name="plus" size={20} />}
-              onClick={() => window.location.href = '/editor/new'}
+              onClick={() => navigate('/editor/new')}
             >
               Start Writing
             </Button>
@@ -55,7 +57,7 @@ export const Home = () => {
               variant="secondary"
               size="lg"
               icon={<Icon name="library" size={20} />}
-              onClick={() => window.location.href = '/library'}
+              onClick={() => navigate('/library')}
             >
               Browse Library
             </Button>
@@ -93,9 +95,9 @@ export const Home = () => {
           <div className="section-header">
             <h2>Continue Reading</h2>
             {continueReading.length > 3 && (
-              <a href="/history" className="view-all">
+              <Link to="/history" className="view-all">
                 View All <Icon name="arrowRight" size={16} />
-              </a>
+              </Link>
             )}
           </div>
           <div className="novel-grid">
@@ -117,7 +119,7 @@ export const Home = () => {
                   <Button
                     variant="primary"
                     size="sm"
-                    onClick={() => window.location.href = `/reader/${novel.id}/${chapter?.id}`}
+                    onClick={() => navigate(`/reader/${novel.id}/${chapter?.id}`)}
                   >
                     Continue
                   </Button>
@@ -133,9 +135,9 @@ export const Home = () => {
         <section className="featured-section">
           <div className="section-header">
             <h2>Your Library</h2>
-            <a href="/library" className="view-all">
+            <Link to="/library" className="view-all">
               View All <Icon name="arrowRight" size={16} />
-            </a>
+            </Link>
           </div>
           <div className="novel-grid">
             {novels.slice(0, 6).map((novel) => (
@@ -168,14 +170,14 @@ export const Home = () => {
                       variant="primary"
                       size="sm"
                       fullWidth
-                      onClick={() => window.location.href = `/reader/${novel.id}`}
+                      onClick={() => navigate(`/reader/${novel.id}`)}
                     >
                       Read
                     </Button>
                     <Button
                       variant="secondary"
                       size="sm"
-                      onClick={() => window.location.href = `/editor/${novel.id}`}
+                      onClick={() => navigate(`/editor/${novel.id}`)}
                     >
                       Edit
                     </Button>
@@ -197,7 +199,7 @@ export const Home = () => {
             variant="primary"
             size="lg"
             icon={<Icon name="plus" size={20} />}
-            onClick={() => window.location.href = '/editor/new'}
+            onClick={() => navigate('/editor/new')}
           >
             Create Your First Novel
           </Button>

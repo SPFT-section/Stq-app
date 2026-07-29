@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { Navigation } from './components/layout/Navigation';
-import { Router } from './Router';
+import { AppRoutes, basePath } from './Router';
 
 export const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,13 +17,15 @@ export const App = () => {
   };
 
   return (
-    <div className="app" style={{ minHeight: '100vh' }}>
-      <Header onMenuToggle={toggleMenu} isMenuOpen={isMenuOpen} />
-      <Navigation isOpen={isMenuOpen} onClose={closeMenu} />
-      <main className="main-content">
-        <Router />
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter basename={basePath || undefined}>
+      <div className="app" style={{ minHeight: '100vh' }}>
+        <Header onMenuToggle={toggleMenu} isMenuOpen={isMenuOpen} />
+        <Navigation isOpen={isMenuOpen} onClose={closeMenu} />
+        <main className="main-content">
+          <AppRoutes />
+        </main>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Icon } from '../common/Icon';
 import './Navigation.css';
 
@@ -22,7 +23,7 @@ export const Navigation = ({ isOpen, onClose }) => {
         <div className="navigation-header">
           <div className="navigation-logo">
             <img
-              src="/favicon.svg"
+              src="favicon.svg"
               alt="STQ Logo"
               width="32"
               height="32"
@@ -41,14 +42,14 @@ export const Navigation = ({ isOpen, onClose }) => {
         <ul className="navigation-list">
           {navLinks.map((link) => (
             <li key={link.href}>
-              <a
-                href={link.href}
+              <Link
+                to={link.href}
                 className="navigation-link"
                 onClick={handleLinkClick}
               >
                 <Icon name={link.icon} size={20} />
                 <span>{link.label}</span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -56,14 +57,14 @@ export const Navigation = ({ isOpen, onClose }) => {
         <div className="navigation-divider" />
 
         <div className="navigation-actions">
-          <a href="/editor/new" className="navigation-action-btn primary">
+          <Link to="/editor/new" className="navigation-action-btn primary">
             <Icon name="plus" size={20} />
             New Novel
-          </a>
-          <a href="/profile" className="navigation-action-btn">
+          </Link>
+          <Link to="/profile" className="navigation-action-btn">
             <Icon name="settings" size={20} />
             Settings
-          </a>
+          </Link>
         </div>
       </nav>
 
