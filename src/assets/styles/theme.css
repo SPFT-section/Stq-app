@@ -1,0 +1,84 @@
+/* ===== Theme Variables ===== */
+
+/* ===== Light Mode (Default) ===== */
+:root {
+  /* Primary Colors */
+  --primary: #1A365D;
+  --primary-hover: #2B4C7E;
+  --secondary: #2B6CB0;
+  --secondary-hover: #3182CE;
+
+  /* Background */
+  --bg-primary: #F7FAFC;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #EDF2F7;
+  --bg-hover: #E2E8F0;
+
+  /* Text */
+  --text-primary: #1A202C;
+  --text-secondary: #4A5568;
+  --text-tertiary: #718096;
+  --text-inverse: #FFFFFF;
+
+  /* Accent */
+  --accent: #ED8936;
+  --accent-hover: #DD6B20;
+
+  /* Border */
+  --border: #E2E8F0;
+  --border-dark: #CBD5E0;
+
+  /* Status */
+  --success: #38A169;
+  --warning: #D69E2E;
+  --error: #E53E3E;
+  --info: #3182CE;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Transitions */
+  --transition: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* ===== Dark Mode ===== */
+[data-theme="dark"] {
+  --primary: #63B3ED;
+  --primary-hover: #90CDF4;
+  --secondary: #4299E1;
+  --secondary-hover: #3182CE;
+
+  --bg-primary: #1A202C;
+  --bg-secondary: #2D3748;
+  --bg-tertiary: #3A4458;
+  --bg-hover: #4A5568;
+
+  --text-primary: #F7FAFC;
+  --text-secondary: #A0AEC0;
+  --text-tertiary: #718096;
+  --text-inverse: #1A202C;
+
+  --accent: #ED8936;
+  --accent-hover: #F6AD55;
+
+  --border: #4A5568;
+  --border-dark: #2D3748;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.4);
+}
